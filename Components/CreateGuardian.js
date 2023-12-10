@@ -15,7 +15,7 @@ const AddGuardianComponent = ({ route }) => {
   const [address, setAddress] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [contactNumber, setContactNumber] = useState('');
-  const [selectedChild, setSelectedChild] = useState(students.length > 0 ? students[0].child : null);
+  const [selectedChild, setSelectedChild] = useState(students.length > 0 ? students[0] : null);
   const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [cnicError, setCnicError] = useState('');
@@ -52,6 +52,7 @@ const AddGuardianComponent = ({ route }) => {
     if (!name || !email || !cnic || !address || !contactNumber || !selectedChild) {
       // Handle validation error, e.g., display an alert
       console.error('Please fill in all required fields.');
+      console.log(selectedChild.child._id)
       return;
     }
   
@@ -77,7 +78,7 @@ const AddGuardianComponent = ({ route }) => {
         contactNumber,
         children: [
           {
-            child: selectedChild._id,
+            child: selectedChild.child._id,
             relation: 'guardian',
           },
         ],
@@ -86,7 +87,7 @@ const AddGuardianComponent = ({ route }) => {
       console.log(body);
   
       // Make a POST request to the server
-      fetch('http://172.17.120.180:3000/guardian/create', {
+      fetch('http://192.168.18.51:3000/guardian/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -103,7 +104,7 @@ const AddGuardianComponent = ({ route }) => {
           setCNIC('');
           setAddress('');
           setContactNumber('');
-          setSelectedChild(students.length > 0 ? students[0].child.name : null);
+          setSelectedChild(students.length > 0 ? students[0] : null);
         })
         .catch(error => {
           console.error('Error creating guardian:', error);
@@ -147,15 +148,16 @@ const AddGuardianComponent = ({ route }) => {
         {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
 
         <TextInput
-          label="CNIC*"
-          value={cnic}
-          onChangeText={(text) => {
-            setCnic(text);
-            validateCnic(text);
-          }}
-          style={styles.input}
-          theme={{ colors: { primary: 'black', text: 'black', placeholder: 'black' } }}
-        />
+  label="CNIC*"
+  value={cnic}
+  onChangeText={(text) => {
+    setCNIC(text);  // Corrected function name
+    validateCnic(text);
+  }}
+  style={styles.input}
+  theme={{ colors: { primary: 'black', text: 'black', placeholder: 'black' } }}
+/>
+
         {cnicError ? <Text style={styles.errorText}>{cnicError}</Text> : null}
 
 
@@ -176,7 +178,7 @@ const AddGuardianComponent = ({ route }) => {
         />
 
         <Button onPress={toggleModal} mode="contained" style={styles.selectChildButton}>
-          {selectedChild ? `Child: ${selectedChild}` : 'Select Child*'}
+          {selectedChild ? `Child: ${selectedChild.child.name}` : 'Select Child*'}
         </Button>
       </View>
 
@@ -193,7 +195,7 @@ const AddGuardianComponent = ({ route }) => {
         {students.map(student => (
   <Button
     key={student.child._id}
-    onPress={() => handleChildSelection(student.child.name)}
+    onPress={() => handleChildSelection(student)}
     style={styles.modalButton}
   >
     {student.child.name} - School: {student.child.school.branchName}, Class: {student.child.class}

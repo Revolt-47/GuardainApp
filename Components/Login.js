@@ -11,8 +11,10 @@ const logoImage = require('../assets/logo.jpeg'); // Import the circular logo im
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isForgotPasswordModalVisible, setIsForgotPasswordModalVisible] = useState(false);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
+
 
   useEffect(() => {
     // Retrieve guardianId and token from AsyncStorage
@@ -33,7 +35,7 @@ const LoginScreen = ({navigation}) => {
     try {
       console.log(email, password);
   
-      const response = await fetch('http://172.17.120.180:3000/guardian/login', {
+      const response = await fetch('http://192.168.18.51:3000/guardian/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +69,7 @@ await AsyncStorage.setItem('guardianId', guardianId);
       navigation.navigate('Home');
     } catch (error) {
       console.error('Login failed:', error);
-  
+
       // Display an error snackbar
       setSnackbarMessage(
         'Login Failed. Please check your credentials and try again.'
