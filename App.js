@@ -1,12 +1,12 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet, View } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import LoginScreen from './Components/Login';
-import HomeScreen from './Components/Home';
-import StudentDetailScreen from './Components/StudentDetails';
-
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { StyleSheet, View } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import LoginScreen from "./Components/Login";
+import HomeScreen from "./Components/Home";
+import StudentDetailScreen from "./Components/StudentDetails";
+import ForgotPasswordScreen from "./Components/ForgotPassword"; // Import ForgotPasswordScreen component
 
 const Stack = createStackNavigator();
 
@@ -16,9 +16,22 @@ export default function App() {
       <NavigationContainer>
         <View style={styles.container}>
           <Stack.Navigator initialRouteName="Login">
-            <Stack.Screen name="Login" component={LoginScreen}  options={{ headerShown: false }}/>
-            <Stack.Screen name="Home" component={HomeScreen}  options={{ headerShown: false }}/>
-            {/* <Stack.Screen name="StudentDetails" component={StudentDetailScreen}  options={{ headerShown: false }}/> */}
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ForgotPassword"
+              component={ForgotPasswordScreen}
+              options={{ title: "Forgot Password" }}
+            />
+            {/* <Stack.Screen name="StudentDetails" component={StudentDetailScreen} options={{ headerShown: false }} /> */}
           </Stack.Navigator>
         </View>
       </NavigationContainer>
@@ -29,6 +42,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
 });

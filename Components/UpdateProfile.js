@@ -22,7 +22,7 @@ const UpdateProfileScreen = ({ route }) => {
         return;
       }
 
-      const response = await fetch(`http://192.168.18.51:3000/guardian/${guardianIdValue}`, {
+      const response = await fetch(`http://172.17.44.214:3000/guardian/${guardianIdValue}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

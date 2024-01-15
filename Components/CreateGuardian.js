@@ -87,7 +87,7 @@ const AddGuardianComponent = ({ route }) => {
       console.log(body);
   
       // Make a POST request to the server
-      fetch('http://192.168.18.51:3000/guardian/create', {
+      fetch('http://172.17.44.214:3000/guardian/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

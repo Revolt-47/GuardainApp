@@ -33,7 +33,7 @@ const StudentDetailsScreen = ({ route }) => {
           return;
         }
 
-        const response = await fetch(`http://192.168.18.51:3000/guardian/getguardian/${selectedStudent.child._id}`, {
+        const response = await fetch(`http://172.17.44.214:3000/guardian/getguardian/${selectedStudent.child._id}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ const StudentDetailsScreen = ({ route }) => {
         return;
       }
 
-      const response = await fetch('http://192.168.18.51:3000/guardian/remove-child', {
+      const response = await fetch('http://172.17.44.214:3000/guardian/remove-child', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

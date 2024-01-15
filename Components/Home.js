@@ -41,7 +41,7 @@ const HomeScreen = ({ navigation }) => {
   const fetchData = async (guardianId, token) => {
     try {
       // Fetch user data
-      const userResponse = await fetch(`http://192.168.18.51:3000/guardian/details/${guardianId}`, {
+      const userResponse = await fetch(`http://172.17.44.214:3000/guardian/details/${guardianId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

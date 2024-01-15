@@ -81,7 +81,7 @@ await AsyncStorage.setItem('guardianId', guardianId);
   const handleForgotPassword = () => {
     // Add logic to handle the "Forgot Password" action, e.g., navigate to a reset password screen.
     // For now, you can display a simple alert.
-    alert('Forgot Password clicked!');
+    navigation.navigate('ForgotPassword');
   }
   
 

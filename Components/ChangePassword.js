@@ -35,7 +35,7 @@ const ChangePasswordScreen = () => {
       };
 
       // Make a POST request to change password
-      const response = await fetch('http://172.17.120.180:3000/guardian/changepw', {
+      const response = await fetch('http://172.17.44.214:3000/guardian/changepw', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ const ChangePasswordScreen = () => {
       console.log('Password change response:', responseData);
 
       // Check if password change was successful
-      if (responseData.success) {
+      if (responseData.message === 'Password changed successfully.') {
         setSnackbarMessage('Password changed successfully.');
         setSnackbarVisible(true);
         setOldPassword('');
