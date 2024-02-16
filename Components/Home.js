@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Image, ActivityIndicator } from 'react-native';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
-import { Avatar } from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import AddGuardianComponent from './CreateGuardian';
-import SideMenu from './SideMenu';
-import ChangePasswordScreen from './ChangePassword';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import StudentDetailsScreen from './StudentDetails';
-import UpdateProfileScreen from './UpdateProfile';
+import React, { useState, useEffect } from "react";
+import { View, Text, Image, ActivityIndicator } from "react-native";
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+} from "@react-navigation/drawer";
+import { Avatar } from "react-native-paper";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import AddGuardianComponent from "./CreateGuardian";
+import SideMenu from "./SideMenu";
+import ChangePasswordScreen from "./ChangePassword";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import StudentDetailsScreen from "./StudentDetails";
+import UpdateProfileScreen from "./UpdateProfile";
 
 const HomeScreen = ({ navigation }) => {
   const [user, setUser] = useState({});
@@ -17,7 +21,7 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     // Retrieve guardianId and token from AsyncStorage
-    AsyncStorage.multiGet(['guardianId', 'token']).then((result) => {
+    AsyncStorage.multiGet(["guardianId", "token"]).then((result) => {
       const [guardianId, token] = result;
 
       // Extract the values from the key-value pairs
@@ -32,7 +36,7 @@ const HomeScreen = ({ navigation }) => {
         fetchData(guardianIdValue, tokenValue);
       } else {
         // Handle the case where either guardianIdValue or tokenValue is null
-        console.error('guardianIdValue or tokenValue is null');
+        console.error("guardianIdValue or tokenValue is null");
         setLoading(false);
       }
     });
@@ -41,15 +45,18 @@ const HomeScreen = ({ navigation }) => {
   const fetchData = async (guardianId, token) => {
     try {
       // Fetch user data
-      const userResponse = await fetch(`http://172.17.44.214:3000/guardian/details/${guardianId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          token: token,
-        }),
-      });
+      const userResponse = await fetch(
+        `http://172.17.44.214:3000/guardian/details/${guardianId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            token: token,
+          }),
+        }
+      );
 
       if (!userResponse.ok) {
         throw new Error(`HTTP error! Status: ${userResponse.status}`);
@@ -62,9 +69,9 @@ const HomeScreen = ({ navigation }) => {
       setUser(guardianData);
       setStudents(studentData || []); // Set an empty array if children is null or undefined
       console.log(studentData);
-      console.log(guardianData)
+      console.log(guardianData);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
     }
@@ -75,8 +82,17 @@ const HomeScreen = ({ navigation }) => {
   const CustomDrawerContent = (props) => {
     return (
       <DrawerContentScrollView {...props}>
-        <View style={{ alignItems: 'center', justifyContent: 'center', padding: 16 }}>
-          <Image source={require('../assets/logo.jpeg')} style={{ width: 80, height: 80, borderRadius: 40 }} />
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 16,
+          }}
+        >
+          <Image
+            source={require("../assets/logo.png")}
+            style={{ width: 80, height: 80, borderRadius: 40 }}
+          />
         </View>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
@@ -86,21 +102,30 @@ const HomeScreen = ({ navigation }) => {
   function MyDrawer() {
     if (loading) {
       return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
       );
     }
 
     return (
-      <Drawer.Navigator initialRouteName="Students" drawerContent={(props) => <CustomDrawerContent {...props} />}>
+      <Drawer.Navigator
+        initialRouteName="Students"
+        drawerContent={(props) => <CustomDrawerContent {...props} />}
+      >
         <Drawer.Screen
           name="Students"
           component={StudentDetailsScreen}
           initialParams={{ students: students }}
           options={{
             drawerIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="account-child" size={size} color={color} />
+              <MaterialCommunityIcons
+                name="account-child"
+                size={size}
+                color={color}
+              />
             ),
           }}
         />
@@ -121,7 +146,12 @@ const HomeScreen = ({ navigation }) => {
             initialParams={{ students: students }} // Ensure that students is not undefined
             options={{
               drawerIcon: ({ color, size }) => (
-                <Avatar.Icon size={size} icon="account-plus" color={color} style={{ backgroundColor: 'white' }} />
+                <Avatar.Icon
+                  size={size}
+                  icon="account-plus"
+                  color={color}
+                  style={{ backgroundColor: "white" }}
+                />
               ),
             }}
           />
@@ -133,7 +163,11 @@ const HomeScreen = ({ navigation }) => {
           initialParams={{ user: user }}
           options={{
             drawerIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="account-edit" size={size} color={color} />
+              <MaterialCommunityIcons
+                name="account-edit"
+                size={size}
+                color={color}
+              />
             ),
           }}
         />
@@ -143,7 +177,12 @@ const HomeScreen = ({ navigation }) => {
           component={SideMenu}
           options={{
             drawerIcon: ({ color, size }) => (
-              <Avatar.Icon size={size} icon="logout" color={color} style={{ backgroundColor: 'white' }} />
+              <Avatar.Icon
+                size={size}
+                icon="logout"
+                color={color}
+                style={{ backgroundColor: "white" }}
+              />
             ),
           }}
         />

@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Snackbar } from 'react-native-paper';
+import React, { useState } from "react";
+import { ScrollView, Image, StyleSheet } from "react-native";
+import { Button, Input, Text } from "@ui-kitten/components";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Snackbar } from "react-native-paper";
 
 const ChangePasswordScreen = () => {
-  const [oldPassword, setOldPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [isSnackbarVisible, setSnackbarVisible] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarMessage, setSnackbarMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChangePassword = async () => {
     try {
       // Retrieve guardianId and token from AsyncStorage
-      const result = await AsyncStorage.multiGet(['guardianId', 'token']);
+      const result = await AsyncStorage.multiGet(["guardianId", "token"]);
       const [guardianId, token] = result;
 
       // Extract the values from the key-value pairs
@@ -22,7 +23,7 @@ const ChangePasswordScreen = () => {
 
       // Check if the authentication token is available
       if (!tokenValue) {
-        console.error('Authentication token not found in local storage.');
+        console.error("Authentication token not found in local storage.");
         return;
       }
 
@@ -35,41 +36,48 @@ const ChangePasswordScreen = () => {
       };
 
       // Make a POST request to change password
-      const response = await fetch('http://172.17.44.214:3000/guardian/changepw', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody),
-      });
+      const response = await fetch(
+        "http://172.17.44.214:3000/guardian/changepw",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
 
       // Handle the response
       const responseData = await response.json();
-      console.log('Password change response:', responseData);
+      console.log("Password change response:", responseData);
 
       // Check if password change was successful
-      if (responseData.message === 'Password changed successfully.') {
-        setSnackbarMessage('Password changed successfully.');
+      if (responseData.message === "Password changed successfully.") {
+        setSnackbarMessage("Password changed successfully.");
         setSnackbarVisible(true);
-        setOldPassword('');
-        setNewPassword('');
+        setOldPassword("");
+        setNewPassword("");
       } else {
-        setSnackbarMessage('Failed to change password. Please check your old password.');
+        setSnackbarMessage(
+          "Failed to change password. Please check your old password."
+        );
         setSnackbarVisible(true);
       }
     } catch (error) {
-      console.error('Error changing password:', error);
+      console.error("Error changing password:", error);
     }
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {/* Logo */}
-      <Image source={require('../assets/logo.jpeg')} style={styles.logo} />
+      <Image source={require("../assets/logo.png")} style={styles.logo} />
 
-      <Text style={styles.title}>Change Password</Text>
+      <Text category="h5" style={styles.title}>
+        Change Password
+      </Text>
 
-      <TextInput
+      <Input
         style={styles.input}
         placeholder="Enter Old Password"
         secureTextEntry={!showPassword}
@@ -77,7 +85,7 @@ const ChangePasswordScreen = () => {
         onChangeText={setOldPassword}
       />
 
-      <TextInput
+      <Input
         style={styles.input}
         placeholder="Enter New Password"
         secureTextEntry={!showPassword}
@@ -85,20 +93,29 @@ const ChangePasswordScreen = () => {
         onChangeText={setNewPassword}
       />
 
-      <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.toggleButton}>
-        <Text style={styles.toggleButtonText}>{showPassword ? 'Hide Password' : 'Show Password'}</Text>
-      </TouchableOpacity>
+      <Button
+        onPress={() => setShowPassword(!showPassword)}
+        style={styles.toggleButton}
+      >
+        {showPassword ? "Hide Password" : "Show Password"}
+      </Button>
 
-      <TouchableOpacity onPress={handleChangePassword} disabled={!oldPassword || !newPassword}>
-        <View style={styles.submitButton}>
-          <Text style={styles.submitButtonText}>Change Password</Text>
-        </View>
-      </TouchableOpacity>
+      <Button
+        onPress={handleChangePassword}
+        style={styles.submitButton}
+        disabled={!oldPassword || !newPassword}
+      >
+        Change Password
+      </Button>
 
       <Snackbar
         visible={isSnackbarVisible}
         onDismiss={() => setSnackbarVisible(false)}
         duration={3000} // Adjust the duration as needed
+        action={{
+          label: "OK",
+          onPress: () => setSnackbarVisible(false),
+        }}
       >
         {snackbarMessage}
       </Snackbar>
@@ -109,25 +126,21 @@ const ChangePasswordScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: 'white', // Set background color to white
+    justifyContent: "flex-start",
+    alignItems: "center",
+    backgroundColor: "white",
     padding: 16,
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
     marginBottom: 16,
-    color: 'black', // Set text color to black
   },
   input: {
     height: 40,
-    width: '100%',
-    borderColor: 'gray',
+    width: "100%",
+    borderColor: "gray",
     borderWidth: 1,
     marginBottom: 16,
-    padding: 8,
-    color: 'black', // Set text color to black
+    color: "black",
   },
   logo: {
     width: 80,
@@ -136,21 +149,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   toggleButton: {
-    padding: 8,
-    marginTop: 8,
-  },
-  toggleButtonText: {
-    color: 'blue', // Set the color you prefer
+    marginBottom: 16,
   },
   submitButton: {
-    backgroundColor: 'black',
-    padding: 16,
-    borderRadius: 8,
     marginTop: 16,
-  },
-  submitButtonText: {
-    color: 'white',
-    textAlign: 'center',
   },
 });
 

@@ -8,7 +8,6 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Snackbar } from "react-native-paper";
 
 const ForgotPasswordScreen = ({ navigation }) => {
@@ -52,9 +51,11 @@ const ForgotPasswordScreen = ({ navigation }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {/* Logo */}
-      <Image source={require("../assets/logo.jpeg")} style={styles.logo} />
+      <Image source={require("../assets/logo.png")} style={styles.logo} />
 
-      <Text style={styles.title}>Forgot Password</Text>
+      <Text category="h5" style={styles.title}>
+        Forgot Password
+      </Text>
 
       <TextInput
         style={styles.input}
@@ -86,14 +87,11 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: "#F7F7F7",
     padding: 16,
   },
   title: {
-    fontSize: 20,
-    fontWeight: "bold",
     marginBottom: 16,
-    color: "black",
   },
   input: {
     height: 40,
@@ -101,6 +99,7 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     borderWidth: 1,
     marginBottom: 16,
+    borderRadius: 25, // Make input fields circular
     padding: 8,
     color: "black",
   },
@@ -113,8 +112,10 @@ const styles = StyleSheet.create({
   submitButton: {
     backgroundColor: "black",
     padding: 16,
-    borderRadius: 8,
     marginTop: 16,
+    borderRadius: 25,
+    borderColor: "#7e7e7e", // Set border color
+    backgroundColor: "#7e7e7e",
   },
   submitButtonText: {
     color: "white",
