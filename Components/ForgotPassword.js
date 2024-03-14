@@ -18,7 +18,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
   const handleForgotPassword = async () => {
     try {
       // request to server aur reset password link bhejo
-      const response = await fetch("http://localhost:3000/guardian/forget-pw", {
+      const response = await fetch("http://localhost:3000/guardians/forget-pw", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

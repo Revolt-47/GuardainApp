@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "VanGuardian",
-    "slug": "VanGuardian",
+    "slug": "vanguardian",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,12 +11,17 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
-    "assets": ["assets/logo.png"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "assets": [
+      "assets/logo.png"
+    ],
     "ios": {
       "supportsTablet": true
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -24,6 +29,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "79dc05cc-ac93-4e99-8369-f1242af47635"
+      }
+    },
+    "owner": "revolt47"
   }
 }

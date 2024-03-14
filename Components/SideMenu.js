@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
+import { registerIndieID, unregisterIndieDevice } from 'native-notify';
 import { Button, Icon, DrawerItem, Layout } from "@ui-kitten/components";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -10,6 +11,7 @@ const SideMenu = ({ navigation }) => {
 
   const handleLogout = async () => {
     // Perform logout logic, such as clearing the AsyncStorage and navigating to the login screen.
+    unregisterIndieDevice(guardianId, 19959, 'tOGmciFdfRxvdPDp3MiotN');
     await AsyncStorage.removeItem("token");
     await AsyncStorage.removeItem("guardianId");
     navigation.navigate("Login");

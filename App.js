@@ -6,6 +6,7 @@ import { StyleSheet, View } from "react-native";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import * as eva from "@eva-design/eva";
+import registerNNPushToken from 'native-notify';
 import LoginScreen from "./Components/Login";
 import HomeScreen from "./Components/Home";
 //import StudentDetailScreen from "./Components/StudentDetails";
@@ -15,6 +16,7 @@ import myTheme from "./theme";
 const Stack = createStackNavigator();
 
 const App = () => {
+  registerNNPushToken(19959, 'tOGmciFdfRxvdPDp3MiotN');
   return (
     <React.Fragment>
       <IconRegistry icons={EvaIconsPack} />

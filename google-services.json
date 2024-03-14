@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "161120295915",
+    "project_id": "vanguardian-d8882",
+    "storage_bucket": "vanguardian-d8882.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161120295915:android:fea7d03d9bc8d0084a17ae",
+        "android_client_info": {
+          "package_name": "com.company.VanGuardian"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlTSGhOUfzMWM0zAY7bXAgKI3Znz37Iv8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

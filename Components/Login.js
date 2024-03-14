@@ -3,6 +3,7 @@ import { View, StyleSheet, Image, ScrollView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button, Input, Text, Layout } from "@ui-kitten/components";
 import { Snackbar } from "react-native-paper";
+import { registerIndieID, unregisterIndieDevice } from 'native-notify';
 
 const logoImage = require("../assets/logo.png");
 const LoginScreen = ({ navigation }) => {
@@ -30,7 +31,7 @@ const LoginScreen = ({ navigation }) => {
     try {
       console.log(email, password);
 
-      const response = await fetch("http://192.168.18.51:3000/guardian/login", {
+      const response = await fetch("http://172.17.68.225:3000/guardians/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -50,7 +51,7 @@ const LoginScreen = ({ navigation }) => {
       console.log(responseData);
       const token = responseData.token;
       const guardianId = responseData.guradianId;
-
+      registerIndieID(guardianId, 19959, 'tOGmciFdfRxvdPDp3MiotN');
       // Store the token and guardianId in local storage
       await AsyncStorage.setItem("token", token);
       await AsyncStorage.setItem("guardianId", guardianId);

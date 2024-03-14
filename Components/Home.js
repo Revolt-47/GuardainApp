@@ -46,14 +46,15 @@ const HomeScreen = ({ navigation }) => {
     try {
       // Fetch user data
       const userResponse = await fetch(
-        `http://172.17.44.214:3000/guardian/details/${guardianId}`,
+        `http://172.17.68.225:3000/guardians/details/${guardianId}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}` 
           },
           body: JSON.stringify({
-            token: token,
+           
           }),
         }
       );

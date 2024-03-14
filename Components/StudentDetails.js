@@ -48,11 +48,12 @@ const StudentDetailsScreen = ({ route }) => {
         }
 
         const response = await fetch(
-          `http://172.17.44.214:3000/guardian/getguardian/${selectedStudent.child._id}`,
+          `http://172.17.68.225:3000/guardians/getguardian/${selectedStudent.child._id}`,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}` ,
             },
             body: JSON.stringify({
               token: tokenValue,
@@ -93,11 +94,12 @@ const StudentDetailsScreen = ({ route }) => {
       }
 
       const response = await fetch(
-        "http://172.17.44.214:3000/guardian/remove-child",
+        "http://172.17.68.225:3000/guardians/remove-child",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}` ,
           },
           body: JSON.stringify({
             guardianId: guardianId2,
@@ -170,166 +172,167 @@ const StudentDetailsScreen = ({ route }) => {
     console.log(route.params);
   });
 
-  return (
-    <View style={styles.container}>
-      <Image
-        source={require("../assets/logo.png")}
-        style={styles.backgroundImage}
-      />
+  // return (
+  //   <View style={styles.container}>
+  //     <Image
+  //       source={require("../assets/logo.png")}
+  //       style={styles.backgroundImage}
+  //     />
 
-      {/* Select Children button in top right corner */}
-      <TouchableOpacity
-        onPress={() => setIsModalVisible(true)}
-        style={styles.selectChildrenButton}
-      >
-        <Text style={styles.selectChildrenText}>Select Student</Text>
-        <FontAwesome name="child" size={30} color="black" style={styles.icon} />
-      </TouchableOpacity>
+  //     {/* Select Children button in top right corner */}
+  //     <TouchableOpacity
+  //       onPress={() => setIsModalVisible(true)}
+  //       style={styles.selectChildrenButton}
+  //     >
+  //       <Text style={styles.selectChildrenText}>Select Student</Text>
+  //       <FontAwesome name="child" size={30} color="black" style={styles.icon} />
+  //     </TouchableOpacity>
 
-      {/* Conditional rendering based on whether students array is empty or not */}
-      {students.length > 0 ? (
-        <>
-          <Card style={styles.studentDetailsCard}>
-            <Card.Content>
-              <TouchableOpacity
-                onPress={() => setIsModalVisible(true)}
-                style={styles.studentDetailsContainer}
-              >
-                <FontAwesome
-                  name="user"
-                  size={30}
-                  color="black"
-                  style={styles.icon}
-                />
-                <Title>{selectedStudent.child.name}</Title>
-              </TouchableOpacity>
+  //     {/* Conditional rendering based on whether students array is empty or not */}
+  //     {students.length > 0 ? (
+  //       <>
+  //         <Card style={styles.studentDetailsCard}>
+  //           <Card.Content>
+  //             <TouchableOpacity
+  //               onPress={() => setIsModalVisible(true)}
+  //               style={styles.studentDetailsContainer}
+  //             >
+  //               <FontAwesome
+  //                 name="user"
+  //                 size={30}
+  //                 color="black"
+  //                 style={styles.icon}
+  //               />
+  //               <Title>{selectedStudent.child.name}</Title>
+  //             </TouchableOpacity>
 
-              <View style={styles.detailContainer}>
-                <FontAwesome5
-                  name="fingerprint"
-                  size={30}
-                  color="black"
-                  style={styles.icon}
-                />
-                <Paragraph>RFID Tag: {selectedStudent.child.rfidTag}</Paragraph>
-              </View>
+  //             <View style={styles.detailContainer}>
+  //               <FontAwesome5
+  //                 name="fingerprint"
+  //                 size={30}
+  //                 color="black"
+  //                 style={styles.icon}
+  //               />
+  //               <Paragraph>RFID Tag: {selectedStudent.child.rfidTag}</Paragraph>
+  //             </View>
 
-              <View style={styles.detailContainer}>
-                <FontAwesome
-                  name="credit-card"
-                  size={30}
-                  color="black"
-                  style={styles.icon}
-                />
-                <Paragraph>
-                  Roll Number: {selectedStudent.child.rollNumber}
-                </Paragraph>
-              </View>
-              <View style={styles.rowContainer}>
-                <View style={styles.detailContainer}>
-                  <FontAwesome
-                    name="institution"
-                    size={30}
-                    color="black"
-                    style={styles.icon}
-                  />
-                  <Paragraph>
-                    School: {selectedStudent.child.school.branchName}, Class:{" "}
-                    {selectedStudent.child.class}, Section:{" "}
-                    {selectedStudent.child.section}
-                  </Paragraph>
-                </View>
-              </View>
-            </Card.Content>
-          </Card>
+  //             <View style={styles.detailContainer}>
+  //               <FontAwesome
+  //                 name="credit-card"
+  //                 size={30}
+  //                 color="black"
+  //                 style={styles.icon}
+  //               />
+  //               <Paragraph>
+  //                 Roll Number: {selectedStudent.child.rollNumber}
+  //               </Paragraph>
+  //             </View>
+  //             <View style={styles.rowContainer}>
+  //               <View style={styles.detailContainer}>
+  //                 <FontAwesome
+  //                   name="institution"
+  //                   size={30}
+  //                   color="black"
+  //                   style={styles.icon}
+  //                 />
+  //                 <Paragraph>
+  //                   School: {selectedStudent.child.school.branchName}, Class:{" "}
+  //                   {selectedStudent.child.class}, Section:{" "}
+  //                   {selectedStudent.child.section}
+  //                 </Paragraph>
+  //               </View>
+  //             </View>
+  //           </Card.Content>
+  //         </Card>
 
-          <Card style={styles.attendanceCard}>
-            <Card.Content>
-              <Title>Attendance Record</Title>
-              {/* Add your attendance record components here */}
-            </Card.Content>
-          </Card>
+  //         <Card style={styles.attendanceCard}>
+  //           <Card.Content>
+  //             <Title>Attendance Record</Title>
+  //             {/* Add your attendance record components here */}
+  //           </Card.Content>
+  //         </Card>
 
-          {/* Call button */}
-          <Button
-            icon="phone"
-            status="success"
-            onPress={() => handleCallButtonPress(selectedStudent.child.name)}
-            style={styles.callButton}
-          >
-            Call {selectedStudent.child.name}
-          </Button>
+  //         {/* Call button */}
+  //         <Button
+  //           icon="phone"
+  //           status="success"
+  //           onPress={() => handleCallButtonPress(selectedStudent.child.name)}
+  //           style={styles.callButton}
+  //         >
+  //           Call {selectedStudent.child.name}
+  //         </Button>
 
-          {/* Guardian button */}
-          {isParent && (
-            <Button
-              onPress={handleGuardianButtonPress}
-              status="warning"
-              style={styles.guardianButton}
-            >
-              {loadingGuardians ? "Loading Guardians..." : "Guardians"}
-            </Button>
-          )}
-        </>
-      ) : (
-        // Display a message or UI component when students array is empty
-        <Text>No students available.</Text>
-      )}
+  //         {/* Guardian button */}
+  //         {isParent && (
+  //           <Button
+  //             onPress={handleGuardianButtonPress}
+  //             status="warning"
+  //             style={styles.guardianButton}
+  //           >
+  //             {loadingGuardians ? "Loading Guardians..." : "Guardians"}
+  //           </Button>
+  //         )}
+  //       </>
+  //     ) : (
+  //       // Display a message or UI component when students array is empty
+  //       <Text>No students available.</Text>
+  //     )}
 
-      {/* Modal for selecting a student */}
-      <UIKittenModal
-        visible={isModalVisible}
-        backdropStyle={styles.modalContainer}
-        onBackdropPress={() => setIsModalVisible(false)}
-      >
-        <View>
-          {students.map((student) => (
-            <TouchableOpacity
-              key={student.child._id}
-              onPress={() => handleStudentSelection(student)}
-              style={styles.modalItem}
-            >
-              <Text style={styles.modalItemText}>{student.child.name}</Text>
-            </TouchableOpacity>
-          ))}
-          {/* Add a cancel button or tap outside to close the modal */}
-          <TouchableOpacity
-            onPress={() => setIsModalVisible(false)}
-            style={styles.modalCancelButton}
-          >
-            <Text style={styles.modalCancelText}>Cancel</Text>
-          </TouchableOpacity>
-        </View>
-      </UIKittenModal>
+  //     {/* Modal for selecting a student */}
+  //     <UIKittenModal
+  //       visible={isModalVisible}
+  //       backdropStyle={styles.modalContainer}
+  //       onBackdropPress={() => setIsModalVisible(false)}
+  //     >
+  //       <View>
+  //         {students.map((student) => (
+  //           <TouchableOpacity
+  //             key={student.child._id}
+  //             onPress={() => handleStudentSelection(student)}
+  //             style={styles.modalItem}
+  //           >
+  //             <Text style={styles.modalItemText}>{student.child.name}</Text>
+  //           </TouchableOpacity>
+  //         ))}
+  //         {/* Add a cancel button or tap outside to close the modal */}
+  //         <TouchableOpacity
+  //           onPress={() => setIsModalVisible(false)}
+  //           style={styles.modalCancelButton}
+  //         >
+  //           <Text style={styles.modalCancelText}>Cancel</Text>
+  //         </TouchableOpacity>
+  //       </View>
+  //     </UIKittenModal>
 
-      {/* Modal for displaying guardians */}
-      <UIKittenModal
-        visible={isGuardianModalVisible}
-        backdropStyle={styles.modalContainer}
-        onBackdropPress={() => setIsGuardianModalVisible(false)}
-      >
-        <View>
-          {renderGuardians()}
-          <TouchableOpacity
-            onPress={() => setIsGuardianModalVisible(false)}
-            style={styles.modalCancelButton}
-          >
-            <Text style={styles.modalCancelText}>Close</Text>
-          </TouchableOpacity>
-        </View>
-      </UIKittenModal>
+  //     {/* Modal for displaying guardians */}
+  //     <UIKittenModal
+  //       visible={isGuardianModalVisible}
+  //       backdropStyle={styles.modalContainer}
+  //       onBackdropPress={() => setIsGuardianModalVisible(false)}
+  //     >
+  //       <View>
+  //         {renderGuardians()}
+  //         <TouchableOpacity
+  //           onPress={() => setIsGuardianModalVisible(false)}
+  //           style={styles.modalCancelButton}
+  //         >
+  //           <Text style={styles.modalCancelText}>Close</Text>
+  //         </TouchableOpacity>
+  //       </View>
+  //     </UIKittenModal>
 
-      {/* Snackbar for success or error messages */}
-      <Snackbar
-        visible={snackbarVisible}
-        onDismiss={() => setSnackbarVisible(false)}
-        duration={3000}
-        style={snackbarVisible ? styles.snackbarVisible : styles.snackbarHidden} // Adjust styles
-      >
-        {snackbarMessage}
-      </Snackbar>
-    </View>
-  );
+  //     {/* Snackbar for success or error messages */}
+  //     <Snackbar
+  //       visible={snackbarVisible}
+  //       onDismiss={() => setSnackbarVisible(false)}
+  //       duration={3000}
+  //       style={snackbarVisible ? styles.snackbarVisible : styles.snackbarHidden} // Adjust styles
+  //     >
+  //       {snackbarMessage}
+  //     </Snackbar>
+  //   </View>
+  // );
+  return(<Text>Hello umer</Text>)
 };
 
 const styles = StyleSheet.create({
