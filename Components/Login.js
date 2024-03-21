@@ -31,7 +31,7 @@ const LoginScreen = ({ navigation }) => {
     try {
       console.log(email, password);
 
-      const response = await fetch("http://172.17.68.225:3000/guardians/login", {
+      const response = await fetch("http://172.16.60.190:3000/guardians/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

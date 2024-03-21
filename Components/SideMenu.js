@@ -11,6 +11,7 @@ const SideMenu = ({ navigation }) => {
 
   const handleLogout = async () => {
     // Perform logout logic, such as clearing the AsyncStorage and navigating to the login screen.
+    const guardianId = await AsyncStorage.getItem('guardianId');
     unregisterIndieDevice(guardianId, 19959, 'tOGmciFdfRxvdPDp3MiotN');
     await AsyncStorage.removeItem("token");
     await AsyncStorage.removeItem("guardianId");
