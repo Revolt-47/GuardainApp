@@ -46,7 +46,7 @@ const HomeScreen = ({ navigation }) => {
     try {
       // Fetch user data
       const userResponse = await fetch(
-        `http://172.17.68.225:3000/guardians/details/${guardianId}`,
+        `http://172.16.60.190:3000/guardians/details/${guardianId}`,
         {
           method: "POST",
           headers: {
@@ -77,6 +77,8 @@ const HomeScreen = ({ navigation }) => {
       setLoading(false);
     }
   };
+
+
 
   const Drawer = createDrawerNavigator();
 
