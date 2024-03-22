@@ -4,6 +4,8 @@ import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import { Button, Card, Title, Paragraph } from 'react-native-paper';
 import { Snackbar } from "react-native-paper";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AttendanceComponent from './AttendanceRecord';
+
 
 const StudentDetailsScreen = ({ route }) => {
   const { students } = route.params;
@@ -51,7 +53,7 @@ const StudentDetailsScreen = ({ route }) => {
         }
 
 
-        const response = await fetch(`http://172.16.60.190:3000/guardians/getguardian/${selectedStudent.child._id}`, {
+        const response = await fetch(`http://192.168.18.53:3000/guardians/getguardian/${selectedStudent.child._id}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -99,7 +101,7 @@ const StudentDetailsScreen = ({ route }) => {
         time: currentTime, 
       };
   
-      const response = await fetch('http://172.16.60.190:3000/attendance/call-student', {
+      const response = await fetch('http://192.168.18.53:3000/attendance/call-student', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -136,7 +138,7 @@ const StudentDetailsScreen = ({ route }) => {
         return;
       }
 
-      const response = await fetch('http://172.16.60.190:3000/guardian/remove-child', {
+      const response = await fetch('http://192.168.18.53:3000/guardian/remove-child', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -261,11 +263,13 @@ const StudentDetailsScreen = ({ route }) => {
 
           {/* 50% space for Attendance Record */}
           <Card style={styles.attendanceCard}>
-            <Card.Content>
-              <Title>Attendance Record</Title>
-              {/* Add your attendance record components here */}
-            </Card.Content>
-          </Card>
+  <Card.Content>
+    <Title>Attendance Record</Title>
+    <View style={{ flex: 1 }}>
+      <AttendanceComponent studentId={selectedStudent.child._id} schoolId={selectedStudent.child.school._id} />
+    </View>
+  </Card.Content>
+</Card>
 
           {/* Call button */}
           <Button
@@ -319,6 +323,10 @@ const StudentDetailsScreen = ({ route }) => {
       </Modal>
     </View>
   );
+
+ 
+   
+  
 };
 
 const styles = StyleSheet.create({
@@ -327,6 +335,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
+  },
+  attendanceCard: {
+    width: '80%',
+    padding: 20,
+    borderRadius: 10,
+    elevation: 5,
+    marginTop: '5%',
+    height: '100%', // Adjust the height to fit the AttendanceComponent
   },
   backgroundImage: {
     position: 'absolute',
@@ -432,6 +448,7 @@ const styles = StyleSheet.create({
   removeButtonText: {
     color: 'white',
   },
+  
 });
 
 export default StudentDetailsScreen;
